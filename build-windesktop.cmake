@@ -5,7 +5,8 @@ set(libs
     oniguruma:x86-windows
     gmp:x64-windows
     gmp:x86-windows)
-set(nupkg ${VCPKG_ROOT}/vcpkg-nmosh-prereq-${version}.nupkg)
+set(nupkg_name vcpkg-nmosh-prereq.${version}.nupkg)
+set(nupkg ${VCPKG_ROOT}/${nupkg_name})
 
 # bootstrap vcpkg
 message(STATUS "Bootstrap...")
@@ -43,4 +44,10 @@ execute_process(
 if(rr)
     message(FATAL_ERROR "export failed(${rr})")
 endif()
-        
+
+if(NOT EXISTS ${nupkg})
+    set(src $ENV{VCPKG_INSTALLATION_ROOT}/${nupkg_name})
+    set(dest ${nupkg})
+    message(STATUS "Copy...(${src} => ${dest})")
+    file(COPY ${src} DESTINATION ${VCPKG_ROOT})
+endif()

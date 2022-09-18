@@ -25,6 +25,6 @@ jobs:
           cmake -P build-windesktop.cmake
       - name: Upload package
         run: |
-          dotnet nuget push c:\vcpkg\vcpkg-nmosh-prereq-0.1.0.nupkg --api-key ${{ secrets.PAT_PACKAGE }} --source gh-okuoku
+          dotnet nuget push vcpkg/vcpkg-nmosh-prereq.0.1.0.nupkg --api-key ${{ secrets.PAT_PACKAGE }} --source gh-okuoku
 
 
