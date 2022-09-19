@@ -30,9 +30,16 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Setup emsdk
+        run: |
+          ./emsdk/emsdk install latest
+      - name: Activate emsdk
+        run: |
+          ./emsdk/emsdk activate latest
       - name: Build
         run: |
-          cmake -DSLOT=emscripten -P build.cmake
+          chmod +x run-on-emsdk.sh
+          ./run-on-emsdk.sh cmake -DSLOT=emscripten -P build.cmake
       - name: Upload package
         uses: actions/upload-artifact@v3
         with:
