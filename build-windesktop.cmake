@@ -1,6 +1,7 @@
 set(VCPKG_ROOT ${CMAKE_CURRENT_LIST_DIR}/vcpkg)
-set(version 0.1.0)
 set(libs
+    libatomic-ops:x86-windows
+    libatomic-ops:x64-windows
     oniguruma:x64-windows
     oniguruma:x86-windows
     gmp:x64-windows
