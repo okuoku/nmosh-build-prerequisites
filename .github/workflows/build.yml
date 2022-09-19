@@ -9,9 +9,6 @@ jobs:
   build-vs2022:
     runs-on: windows-latest
     steps:
-      - name: Add nuget source
-        run: |
-          dotnet nuget add source --username okuoku --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name gh-okuoku https://nuget.pkg.github.com/okuoku/index.json
       - name: Import VS2022
         uses: ilammy/msvc-dev-cmd@v1.11.0
         with:
@@ -24,7 +21,7 @@ jobs:
         run: |
           cmake -P build-windesktop.cmake
       - name: Upload package
-        run: |
-          dotnet nuget push vcpkg/vcpkg-nmosh-prereq.0.1.0.nupkg --api-key ${{ secrets.PAT_PACKAGE }} --source gh-okuoku
-
-
+        uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: vcpkg/vcpkg-nmosh-prereq.0.1.0.nupkg
