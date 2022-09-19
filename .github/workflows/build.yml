@@ -6,6 +6,54 @@ on:
   push:
 
 jobs:
+  build-apple:
+    name: "apple"
+    runs-on: macos-12
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          cmake -DSLOT=apple -P build.cmake
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: vcpkg/nmosh-build-prerequisites-apple.zip
+  build-emscripten:
+    name: "emscripten"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          cmake -DSLOT=emscripten -P build.cmake
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: vcpkg/nmosh-build-prerequisites-emscripten.zip
+  build-android:
+    name: "android"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          cmake -DSLOT=android -P build.cmake
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: vcpkg/nmosh-build-prerequisites-android.zip
   build-vs2022:
     runs-on: windows-latest
     steps:
@@ -19,7 +67,7 @@ jobs:
           submodules: recursive
       - name: Build
         run: |
-          cmake -P build-windesktop.cmake
+          cmake -DSLOT=winnative -P build.cmake
       - name: Upload package
         uses: actions/upload-artifact@v3
         with:
